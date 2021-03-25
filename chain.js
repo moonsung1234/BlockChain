@@ -29,19 +29,25 @@ class Chain {
 
     checkNewBlock(block, pre_block) {
         // check is structure is correct
-        if(!this.checkIsCorrectStructure(block)) {
-            return false;
-        }
+        // if(!this.checkIsCorrectStructure(block)) {
+        //     return false;
+        // }
+
+        console.log(1);
 
         // check if index is correct
         if(block.index != pre_block.index + 1) {
             return false;
         }
 
+        console.log(2);
+
         // check if hash is correct
         if(block.pre_hash != pre_block.hash) {
             return false;
         }
+
+        console.log(3);
 
         return true;
     }
@@ -58,6 +64,18 @@ class Chain {
         
             return block;
         }
+
+        return false;
+    }
+
+    addSentBlock(block) {
+        if(this.checkNewBlock(block, this.getLastBlock())) {
+            this.block_chain.push(block);
+        
+            return block;
+        }
+
+        return false;
     }
 
     checkNewChain(block_chain) {
@@ -77,7 +95,9 @@ class Chain {
 
                 return this.block_chain;
             }
-        } 
+        }
+
+        return false;
     }
 }
 

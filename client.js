@@ -38,6 +38,9 @@ socket.on("connect", () => {
     rl.on("line", function(line) {
         if(line.indexOf("add ") == 0) {
             socket.write(JSON.stringify(parseToAddedMessage(line, "last")));
+        
+        } else if(line == "len") {
+            console.log("length : " + chain.block_chain.length);
         }
     
     }).on("close", function() {
@@ -51,7 +54,7 @@ socket.on("data", (data) => {
     let parsed_data = JSON.parse(data.toString());
 
     if(parsed_data.type == "last") {
-        let block = chain.addBlock(parsed_data.data);
+        let block = chain.addSentBlock(parsed_data.data);
 
         if(!block) {
             console.log("added failed.");
